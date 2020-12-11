@@ -1,0 +1,28 @@
+<project>
+	<target name="clean">
+		<delete dir="build" />
+	</target>
+	<target name="build">
+		<mkdir dir="build/classes" />
+		<javac srcdir="src" destdir="build/classes">
+			<compilerarg value="--enable-preview" />
+			<compilerarg value="-Xlint:unchecked" />
+				<!--<compilerarg value="-Xlint:preview" />-->
+			<compilerarg line="--release 15" />
+		</javac>
+	</target>
+	<target name="jar" depends="build">
+		<jar destfile="build/jerl.jar" basedir="build/classes">
+			<manifest>
+				<attribute name="Main-Class" value="jerl.test.Main" />
+			</manifest>
+		</jar>
+	</target>
+	<target name="run" depends="jar">
+		<java jar="build/jerl.jar" fork="true">
+			<jvmarg value="--enable-preview" />
+		</java>
+	</target>
+	<target name="re" depends="clean,jar" />
+</project>
+
